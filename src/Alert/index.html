@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>在Vue中注册组件</title>
+      <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+       <h4>主题</h4>
+       <hong-alert title="成功提示的文案"type="success"> </hong-alert>
+       <hong-alert title="消息提示的文案"type="info"> </hong-alert>
+       <hong-alert title="警告提示的文案"type="warning"> </hong-alert>
+       <hong-alert title="错误提示的文案"type="error"> </hong-alert>
+
+
+        <h4>带有 icon</h4>
+        <hong-alert title="成功提示的文案"type="success"show-icon> </hong-alert>
+        <hong-alert title="消息提示的文案"type="info"show-icon> </hong-alert>
+        <hong-alert title="警告提示的文案"type="warning"show-icon> </hong-alert>
+        <hong-alert title="错误提示的文案"type="error"show-icon> </hong-alert>
+
+        <h4>自定义关闭按钮为文字或其他符号。</h4>
+        <hong-alert title="不可关闭的 alert"type="success":closable="false"> </hong-alert>
+        <hong-alert title="自定义 close-text"type="info"close-text="知道了"> </hong-alert>
+        <hong-alert title="设置了回调的 alert"type="warning" @close="hello"></hong-alert>
+
+        <h4>带有 icon 和 文字介绍</h4>
+        <hong-alert  title="成功提示的文案"type="success"description="文字说明文字说明文字说明文字说明文字说明文字说明"show-icon> </hong-alert>
+        <hong-alert title="消息提示的文案"type="info"description="文字说明文字说明文字说明文字说明文字说明文字说明"show-icon> </hong-alert>
+        <hong-alert title="警告提示的文案"type="warning"description="文字说明文字说明文字说明文字说明文字说明文字说明"show-icon> </hong-alert>
+        <hong-alert title="错误提示的文案"type="error"description="文字说明文字说明文字说明文字说明文字说明文字说明"show-icon> </hong-alert>
+    </div>
+</div>
+</body>
+<script src="./Alert.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        methods: {
+            hello: function () {
+                window.alert('hello world');
+            }
+        }
+    })
+</script>
+</html>

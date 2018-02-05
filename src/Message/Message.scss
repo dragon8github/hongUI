@@ -1,0 +1,125 @@
+.hong-message__closeBtn:focus,
+.hong-message__content:focus {
+    outline-width: 0
+}
+
+.hong-message {
+    min-width: 380px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ebeef5;
+    position: fixed;
+    left: 50%;
+    top: 20px;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background-color: #edf2fc;
+    -webkit-transition: opacity .3s, -webkit-transform .4s;
+    transition: opacity .3s, -webkit-transform .4s;
+    transition: opacity .3s, transform .4s;
+    transition: opacity .3s, transform .4s, -webkit-transform .4s;
+    overflow: hidden;
+    padding: 15px 15px 15px 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.hong-message.is-center {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center
+}
+
+.hong-message.is-closable .hong-message__content {
+    padding-right: 16px
+}
+
+.hong-message p {
+    margin: 0
+}
+
+.hong-message--info .hong-message__content {
+    color: #909399
+}
+
+.hong-message--success {
+    background-color: #f0f9eb;
+    border-color: #e1f3d8
+}
+
+.hong-message--success .hong-message__content {
+    color: #67c23a
+}
+
+.hong-message--warning {
+    background-color: #fdf6ec;
+    border-color: #faecd8
+}
+
+.hong-message--warning .hong-message__content {
+    color: #e6a23c
+}
+
+.hong-message--error {
+    background-color: #fef0f0;
+    border-color: #fde2e2
+}
+
+.hong-message--error .hong-message__content {
+    color: #f56c6c
+}
+
+.hong-message__icon {
+    margin-right: 10px
+}
+
+.hong-message__content {
+    padding: 0;
+    font-size: 14px;
+    line-height: 1
+}
+
+.hong-message__closeBtn {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #c0c4cc;
+    font-size: 16px
+}
+
+.hong-message__closeBtn:hover {
+    color: #909399
+}
+
+.hong-message .hong-icon-success {
+    color: #67c23a
+}
+
+.hong-message .hong-icon-error {
+    color: #f56c6c
+}
+
+.hong-message .hong-icon-info {
+    color: #909399
+}
+
+.hong-message .hong-icon-warning {
+    color: #e6a23c
+}
+
+.hong-message-fade-enter,
+.hong-message-fade-leave-active {
+    opacity: 0;
+    -webkit-transform: translate(-50%, -100%);
+    transform: translate(-50%, -100%)
+}

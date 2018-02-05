@@ -17,8 +17,7 @@ var setStyle = function (cssname) {var head = document.getElementsByTagName('hea
                 'height': spinnerSize,
                 'width': spinnerSize
           }">
-          </div>
-        `,
+          </div>`,
         props: {
             size: {
               type: Number,
