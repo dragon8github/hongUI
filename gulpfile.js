@@ -30,7 +30,7 @@ gulp.task('serve', function() {
         }
     });
     gulp.watch(['./src/**/*.scss', './src/**/**/*.scss'], scss);
-    gulp.watch("./src/**/*.html").on('change', reload);
+    gulp.watch(["./src/**/*.html","./src/**/*.js",'./src/**/*.scss', './src/**/**/*.scss']).on('change', reload);
 });
 
 // 开始
