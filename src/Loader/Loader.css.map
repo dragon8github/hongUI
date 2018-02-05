@@ -1,0 +1,1 @@
+{"version":3,"sources":["Loader/Loader.scss"],"names":[],"mappings":"AAAA,CAAC,EAAE,MAAM,EAAE,OAAO,CAAC;EACf,kBAAkB,EAAE,UAAU;EACtB,UAAU,EAAE,UAAU,GACjC","file":"Loader.css","sourcesContent":["*, :after, :before {\r\n    -webkit-box-sizing: border-box;\r\n            box-sizing: border-box;\r\n}\r\n"]}
