@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>在Vue中注册组件</title>
+      <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="ProcessWarp">
+        <ProcessLine :data='myProcess'></ProcessLine>
+    </div>
+</div>
+</body>
+<script src="./ProcessLine.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            myProcess: []
+        },
+        beforeMount: function () {
+            var self = this;
+
+            // 模拟ajax
+            window.setTimeout(function (){
+                self.myProcess = [
+                    { title: '信贷专员',       content: '提交上标'},
+                    { title: '团队主管',       content: '上标审批'},
+                    { title: '区域复审法务',   content: '上标审批', inActive: true},
+                    { title: '区域初审法务',   content: '上标审批'},
+                    { title: '团队主管',       content: '上标审批'},
+                    { title: '财务出款',       content: '流程结束'}
+                ];
+            }, 1000)
+        }
+    })
+</script>
+</html>
