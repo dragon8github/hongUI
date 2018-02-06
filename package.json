@@ -12,7 +12,7 @@
     "gulp-sourcemaps": "^2.6.4"
   },
   "scripts": {
-    "git": "git add . && git commit -m ${V} && git push -u origin master"
+    "git": "git add . && git commit -m ${M} && git push -u origin master"
   },
   "keywords": [],
   "author": "",
