@@ -10,12 +10,7 @@ var setStyle = function (cssname) {var head = document.getElementsByTagName('hea
     setStyle("Message.css")
 
 
-    const typeMap = {
-       success: 'success',
-       info: 'info',
-       warning: 'warning',
-       error: 'error'
-     };
+    const typeMap = {success: 'success', info: 'info', warning: 'warning', error: 'error'};
 
     var Message = Vue.extend({
         template: `
@@ -81,6 +76,7 @@ var setStyle = function (cssname) {var head = document.getElementsByTagName('hea
              }
          },
          methods: {
+             // get~ 销毁组件
              destroyElement() {
                this.$el.removeEventListener('transitionend', this.destroyElement);
                this.$destroy(true);
@@ -105,7 +101,8 @@ var setStyle = function (cssname) {var head = document.getElementsByTagName('hea
                }
              },
              keydown(e) {
-               if (e.keyCode === 27) { // esc关闭消息
+                // esc关闭消息
+               if (e.keyCode === 27) {
                  if (!this.closed) {
                    this.close();
                  }
@@ -127,32 +124,40 @@ var setStyle = function (cssname) {var head = document.getElementsByTagName('hea
     let seed = 1;
     let zIndex = 199307100337;
     const MyMessage = function(options) {
-        if (Vue.prototype.$isServer) return;
         options = options || {};
         if (typeof options === 'string') {
           options = {
             message: options
           };
         }
-        let userOnClose = options.onClose;
+
         let id = 'message_' + seed++;
+
+        let userOnClose = options.onClose;
 
         options.onClose = function() {
           MyMessage.close(id, userOnClose);
         };
+
         instance = new MessageConstructor({
-          data: options
+           data: options
         });
+        
         instance.id = id;
         instance.vm = instance.$mount();
-        document.body.appendChild(instance.vm.$el);
         instance.vm.visible = true;
-        instance.dom = instance.vm.$el;
-        instance.dom.style.zIndex = ++zIndex;
+        instance.dom = instance.vm.$el;  
+        instance.dom.style.zIndex = zIndex++;
         instances.push(instance);
+        document.body.appendChild(instance.vm.$el);
+
+        // 返回实例是为了close
         return instance.vm;
     };
 
+    // 学到新知识，可以靠这种方式，快速开发出类似如下语句：
+    // this.Message.error('错了哦，这是一条错误消息');
+    // this.Message.info('警告哦，这是一条警告消息');等等
     ['success', 'warning', 'info', 'error'].forEach(type => {
         MyMessage[type] = options => {
           if (typeof options === 'string') {
