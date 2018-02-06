@@ -5,30 +5,19 @@
 
 .hong-message {
     min-width: 380px;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 4px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #ebeef5;
+    border: 1px solid #ebeef5;
     position: fixed;
     left: 50%;
     top: 20px;
-    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: #edf2fc;
-    -webkit-transition: opacity .3s, -webkit-transform .4s;
-    transition: opacity .3s, -webkit-transform .4s;
-    transition: opacity .3s, transform .4s;
-    transition: opacity .3s, transform .4s, -webkit-transform .4s;
+    transition: opacity .3s,transform .4s;
     overflow: hidden;
     padding: 15px 15px 15px 20px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center
+    align-items: center;
 }
 
 .hong-message.is-center {

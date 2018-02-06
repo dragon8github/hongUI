@@ -3,21 +3,21 @@
 <head>
     <meta charset="utf-8">
     <title>在Vue中注册组件</title>
-      <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
-     
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+    <script src="./Message.js"></script>
 </head>
 <body>
-<div id="app">  </div>
+<div id="app"></div>
 </body>
-<script src="./Message.js"></script>
 <script>
     new Vue({
         el: '#app',
         mounted: function () {
-             setTimeout(_=> {this.Message('这是一条消息提示'); }, 100);
-             setTimeout(_=> {this.Message({message: '恭喜你，这是一条成功消息', type: 'success'}); }, 1000);
-             setTimeout(_=> {this.Message({message: '警告哦，这是一条警告消息', type: 'warning'}); },2000);
-             setTimeout(_=> {this.Message.error('错了哦，这是一条错误消息'); }, 3000);
+            this.Message('这是一条消息提示');
+            setTimeout(_=> {this.Message('这是一条消息提示'); }, 1000);
+            setTimeout(_=> {this.Message({message: '恭喜你，这是一条成功消息', type: 'success'}); }, 2000);
+            setTimeout(_=> {this.Message({message: '警告哦，这是一条警告消息', type: 'warning'}); },3000);
+            setTimeout(_=> {this.Message.error('错了哦，这是一条错误消息'); }, 4000);
         }
     })
 </script>
