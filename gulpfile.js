@@ -10,6 +10,14 @@ const rename       = require('gulp-rename');
 const yargs        = require('yargs')
 const argv         = yargs.alias('n', 'name').alias('p', 'port').argv;
 
+function create () {
+    // 1、新建模板
+    // 2、修改index.html的内容
+    // 3、添加 xxxx.scss、xxxx.js 进src
+    // 4、添加基本内容进入xxxx.js
+    // 5、编译并且启动
+}
+
 function scss () {
     return gulp.src('./components/**/src/*.scss')
         .pipe(sourcemaps.init())
@@ -19,7 +27,7 @@ function scss () {
             remove: true
         }))
         .pipe(sass().on('error', sass.logError))
-        .pipe(sourcemaps.write('.')) 
+        .pipe(sourcemaps.write('./')) 
         .pipe(rename(function (path) {
             path.dirname = path.dirname.replace('src', 'dist')
         }))
@@ -30,22 +38,22 @@ function babel_env () {
     return gulp.src('./components/**/src/*.js')
                .pipe(sourcemaps.init())
                .pipe(babel({
-                  presets: [
-                      [
-                        "env",
-                        {
-                          "targets": {
-                            "browsers": ["last 5 versions", "ie >= 8"]
+                    presets: [
+                        [
+                          "env",
+                          {
+                            "targets": {
+                              "browsers": ["last 5 versions", "ie >= 8"]
+                            }
                           }
-                        }
-                      ],
-                      "babel-preset-stage-2"
-                  ],
-                  plugins: [
-                      'transform-runtime'
-                  ]
+                        ],
+                        "babel-preset-stage-2"
+                    ],
+                    plugins: [
+                        'transform-runtime'
+                    ]
                }))
-               .pipe(sourcemaps.write('.')) 
+               .pipe(sourcemaps.write('./')) 
                .pipe(rename(function (path) {
                    path.dirname = path.dirname.replace('src', 'dist')
                }))
@@ -58,6 +66,9 @@ gulp.task(scss);
 
 // 编译babel
 gulp.task(babel_env)
+
+// 创建一个组件
+gulp.task(create)
 
 // 静态服务器
 gulp.task('serve', function() {
