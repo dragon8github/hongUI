@@ -6,8 +6,8 @@ const sourcemaps   = require('gulp-sourcemaps');
 const browserSync  = require('browser-sync').create();
 const reload       = browserSync.reload;
 const babel        = require('gulp-babel');
-const yargs        = require('yargs')
 const rename       = require('gulp-rename');
+const yargs        = require('yargs')
 const argv         = yargs.alias('n', 'name').alias('p', 'port').argv;
 
 function scss () {
@@ -21,25 +21,35 @@ function scss () {
         .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.write('.')) 
         .pipe(rename(function (path) {
-            console.log(path);
             path.dirname = path.dirname.replace('src', 'dist')
         }))
         .pipe(gulp.dest('./components'))
-        // .pipe(gulp.dest(function (event) {
-        //     console.log(event.path.substr(0, event.path.lastIndexOf('src')) + 'dist', event.basename);
-        //     return event.path.substr(0, event.path.lastIndexOf('src')) + 'dist';
-        // }))           
 }
 
 function babel_env () {
     return gulp.src('./components/**/src/*.js')
                .pipe(sourcemaps.init())
                .pipe(babel({
-                   presets: ['@babel/env'],
-                   plugins: ['@babel/transform-runtime']
+                  presets: [
+                      [
+                        "env",
+                        {
+                          "targets": {
+                            "browsers": ["last 5 versions", "ie >= 8"]
+                          }
+                        }
+                      ],
+                      "babel-preset-stage-2"
+                  ],
+                  plugins: [
+                      'transform-runtime'
+                  ]
                }))
-               .pipe(sourcemaps.write('./'))
-               .pipe(gulp.dest('./src/../dist/'))
+               .pipe(sourcemaps.write('.')) 
+               .pipe(rename(function (path) {
+                   path.dirname = path.dirname.replace('src', 'dist')
+               }))
+               .pipe(gulp.dest('./components'))
             
 }
 
