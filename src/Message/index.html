@@ -13,11 +13,14 @@
     new Vue({
         el: '#app',
         mounted: function () {
-            this.Message('这是一条消息提示');
-            setTimeout(_=> {this.Message('这是一条消息提示'); }, 1000);
-            setTimeout(_=> {this.Message({message: '恭喜你，这是一条成功消息', type: 'success'}); }, 2000);
-            setTimeout(_=> {this.Message({message: '警告哦，这是一条警告消息', type: 'warning'}); },3000);
-            setTimeout(_=> {this.Message.error('错了哦，这是一条错误消息'); }, 4000);
+            var msg = this.Message('这是一条消息提示')
+            setTimeout(_=> { this.Message.close(msg.id) }, 500);
+
+
+            // setTimeout(_=> {this.Message('这是一条消息提示'); }, 1000);
+            // setTimeout(_=> {this.Message({message: '恭喜你，这是一条成功消息', type: 'success'}); }, 2000);
+            // setTimeout(_=> {this.Message({message: '警告哦，这是一条警告消息', type: 'warning'}); },3000);
+            // setTimeout(_=> {this.Message.error('错了哦，这是一条错误消息'); }, 4000);
         }
     })
 </script>

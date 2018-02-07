@@ -221,7 +221,6 @@
     var instances = [];
     var seed = 1;
     var zIndex = 199307100337;
-    var LazyExecList = [];
     var links = hongAPI.setStyle("icon.css", "Message.css");
 
     // TODO:外部如何获取实例？
@@ -249,6 +248,7 @@
         document.body.appendChild(instance.vm.$el);
         instances.push(instance);
         hongAPI.linksOnload(links, function () {
+            console.log(1)
             instance.vm.visible = true;
         })
         return instance.vm;
@@ -270,15 +270,20 @@
     });
 
     MyMessage.close = function(id, cb) {
-      for (var i = 0, len = instances.length; i < len; i++) {
-        if (id === instances[i].id) {
-          if (typeof cb === 'function') {
-            cb(instances[i]);
+      hongAPI.linksOnload(links, function () {
+         for (var i = 0, len = instances.length; i < len; i++) {
+            if (id === instances[i].id) {
+              console.log(2)
+              instances[i].closed = true;
+              if (typeof cb === 'function') {
+                cb(instances[i]);
+              }
+              instances.splice(i, 1);
+              break;
+            }
           }
-          instances.splice(i, 1);
-          break;
-        }
-      }
+      })
+      
     };
 
     MyMessage.closeAll = function() {
