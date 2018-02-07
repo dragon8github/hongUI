@@ -1,7 +1,6 @@
 ;window.hongAPI = (function () {
 
-   let isLoadFinish = false;
-
+   var isLoadFinish = false;
 
    // seajs的解决方案
    var styleOnload = function (node, callback) {
@@ -110,7 +109,6 @@
 ;(function (win, Vue) {
     'use strict';
 
-    var links = hongAPI.setStyle("icon.css", "Message.css");
     const typeMap = {success: 'success', info: 'info', warning: 'warning', error: 'error'};
     var Message = Vue.extend({
         template: `
@@ -218,36 +216,42 @@
          }
     });
 
-    let MessageConstructor = Vue.extend(Message);
-    let instance;
-    let instances = [];
-    let seed = 1;
-    let zIndex = 199307100337;
-    let LazyExecList = [];
+    var MessageConstructor = Vue.extend(Message);
+    var instance;
+    var instances = [];
+    var seed = 1;
+    var zIndex = 199307100337;
+    var LazyExecList = [];
+    var links = hongAPI.setStyle("icon.css", "Message.css");
 
-    // TODO:代理懒惰加载
-    // TODO: 判断是否加载完成
-    // 外部如何获取实例？
+    // TODO:外部如何获取实例？
+    // 知识点
+    // 插入页面的$el dom 示例也会被引用关联。也就是说，哪怕插入了。我修改了$el。那么dom也会受到影响。
+    // 虽然我知道。但还是很少用觉得很神奇。
+    // 问题: 为何插入网页会造成这样？
     const MyMessage = function (options) {
-      hongAPI.linksOnload(links, function () {
-          options = options || {};
-          if (typeof options === 'string') { options = {message: options }; }
-
-          let userOnClose = options.onClose;
-          let id = 'message_' + seed++;
-          options.onClose = function() { MyMessage.close(id, userOnClose); };
-          instance = new MessageConstructor({ data: options });
-
-          instance.id = id;
-          instance.vm = instance.$mount();
-          instance.dom = instance.vm.$el;  
-          instance.dom.style.zIndex = zIndex++;
-          instance.vm.visible = true;
-          document.body.appendChild(instance.vm.$el);
-          instances.push(instance);
-
-          return instance.vm;
-      })
+        options = options || {};
+        if (typeof options === 'string') { options = {message: options }; }
+        var userOnClose = options.onClose;
+        var id = 'message_' + seed++;
+        options.onClose = function() { MyMessage.close(id, userOnClose); };
+        instance = new MessageConstructor({ data: options });
+        instance.id = id;
+        // 知识点，手动挂载$mount()
+        // 如果没有挂载的话，没有关联的 DOM 元素。是获取不到$el的。
+        instance.vm = instance.$mount();
+        instance.dom = instance.vm.$el;  
+        instance.dom.style.zIndex = zIndex++;
+        // 知识点：向网页插入元素并不会触发<transition name="hong-message-fade">
+        // 官方说只有v-if和v-show才会触发。那就是说，真正的触发时机是instance.vm.visible = true;的时候
+        // 我之所以会认为插入页面也会触发，是因为被路由误导了吧。事实上transition对路由也是特殊处理的
+        // 总结一下，一共三个东西会触发transition， v-if、v-show、还有路由<router-view></router-view>
+        document.body.appendChild(instance.vm.$el);
+        instances.push(instance);
+        hongAPI.linksOnload(links, function () {
+            instance.vm.visible = true;
+        })
+        return instance.vm;
     };
 
     // 学到新知识，可以靠这种方式，快速开发出类似如下语句：
@@ -266,7 +270,7 @@
     });
 
     MyMessage.close = function(id, cb) {
-      for (let i = 0, len = instances.length; i < len; i++) {
+      for (var i = 0, len = instances.length; i < len; i++) {
         if (id === instances[i].id) {
           if (typeof cb === 'function') {
             cb(instances[i]);
@@ -278,7 +282,7 @@
     };
 
     MyMessage.closeAll = function() {
-      for (let i = instances.length - 1; i >= 0; i--) {
+      for (var i = instances.length - 1; i >= 0; i--) {
         instances[i].close();
       }
     };
