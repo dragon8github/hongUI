@@ -1,14 +1,16 @@
-'use strict';
-const gulp         = require('gulp');
-const sass         = require('gulp-sass');
-const autoprefixer = require('gulp-autoprefixer');
-const sourcemaps   = require('gulp-sourcemaps');
-const browserSync  = require('browser-sync').create();
-const reload       = browserSync.reload;
-const babel        = require('gulp-babel');
-const rename       = require('gulp-rename');
+'use strict'
+const fs   = require('fs')
+const gulp = require('gulp')
+const sass = require('gulp-sass')
+const autoprefixer = require('gulp-autoprefixer')
+const sourcemaps   = require('gulp-sourcemaps')
+const browserSync  = require('browser-sync').create()
+const reload       = browserSync.reload
+const babel        = require('gulp-babel')
+const rename       = require('gulp-rename')
 const yargs        = require('yargs')
-const argv         = yargs.alias('n', 'name').alias('p', 'port').argv;
+const ejs          = require("gulp-ejs")
+const argv         = yargs.alias('n', 'name').alias('p', 'port').argv
 
 function create () {
     // 1、新建模板
@@ -50,7 +52,7 @@ function babel_env () {
                         "babel-preset-stage-2"
                     ],
                     plugins: [
-                        'transform-runtime'
+                        // 'transform-runtime'
                     ]
                }))
                .pipe(sourcemaps.write('./')) 
@@ -58,11 +60,27 @@ function babel_env () {
                    path.dirname = path.dirname.replace('src', 'dist')
                }))
                .pipe(gulp.dest('./components'))
-            
 }
 
+function compile () {
+    let components = []
+    const files = fs.readdirSync('./components')
+    files.forEach(function (item, index) {
+        var stat = fs.lstatSync("./components/" + item)
+        if (stat.isDirectory() === true) { 
+          components.push(item)
+        }
+    })
+    return gulp.src('./index.html')
+               .pipe(ejs({
+                   components: components
+               }))
+               .pipe(gulp.dest('./components'))
+}
+
+
 // 编译sass
-gulp.task(scss);
+gulp.task(scss)
 
 // 编译babel
 gulp.task(babel_env)
@@ -70,18 +88,21 @@ gulp.task(babel_env)
 // 创建一个组件
 gulp.task(create)
 
+// 编译ejs
+gulp.task(compile)
+
 // 静态服务器
 gulp.task('serve', function() {
     browserSync.init({
         port: argv.port || '3000',
         server: {
-            baseDir: './components/' + argv.name
+            baseDir: './components/' + (argv.name || '')
         },
-    });
-    gulp.watch('./components/**/src/*.scss', scss);
-    gulp.watch('./components/**/src/*.js', babel_env);
-    gulp.watch(['./components/**/*.html','./components/**/src/.js','./components/**/src/*.scss']).on('change', reload);
-});
+    })
+    gulp.watch('./components/**/src/*.scss', scss)
+    gulp.watch('./components/**/src/*.js', babel_env)
+    gulp.watch(['./components/**/*.html','./components/**/src/*.js','./components/**/src/*.scss']).on('change', reload)
+})
 
 // 开始
-gulp.task('default', gulp.series('scss', 'babel_env', 'serve'));
+gulp.task('default', gulp.series('scss', 'babel_env', 'compile', 'serve'))

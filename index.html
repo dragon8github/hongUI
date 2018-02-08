@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <% components.forEach(function(name){ %>
+        <li><a href="./<%= name %>"><%= name %></a></li>
+        <% }); %>
+    </ul>
+</body>
+</html>
