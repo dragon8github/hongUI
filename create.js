@@ -25,6 +25,20 @@ function compile (jspath, obj) {
 }
 
 
+// 人机交互
+function readSyncByfs(tips) {
+    tips = tips || '> ';
+    process.stdout.write(tips);
+    process.stdin.pause();
+
+    const buf = Buffer.allocUnsafe(10000);
+    let response = fs.readSync(process.stdin.fd, buf, 0, 10000, 0);
+    process.stdin.end();
+
+    return buf.toString('utf8', 0, response).trim();
+}
+
+
 function create () {
     // 解压路径
     let basePath = './components'
@@ -61,4 +75,10 @@ function create () {
     })
 }
 
-create()
+
+
+
+// create()
+
+var a = readSyncByfs('');
+console.log(a)
