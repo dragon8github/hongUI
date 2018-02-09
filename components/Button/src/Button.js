@@ -6,8 +6,6 @@ var setStyle = function setStyle(cssname) {var head = document.getElementsByTagN
 ;(function (win, Vue) {
     'use strict';
 
-    console.log(getPath);
-
     setStyle("Button.css")
     setStyle("icon.css")
 

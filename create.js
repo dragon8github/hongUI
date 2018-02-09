@@ -45,9 +45,9 @@ function deleteall(path) {
         files = fs.readdirSync(path)  
         files.forEach(function(file, index) {  
             var curPath = path + "/" + file  
-            if(fs.statSync(curPath).isDirectory()) { // recurse  
+            if(fs.statSync(curPath).isDirectory()) {   
                 deleteall(curPath)  
-            } else { // delete file  
+            } else { 
                 fs.unlinkSync(curPath)  
             }  
         })  
