@@ -1,7 +1,7 @@
 'use strict'
-const fs   = require('fs')
-const gulp = require('gulp')
-const sass = require('gulp-sass')
+const fs           = require('fs')
+const gulp         = require('gulp')
+const sass         = require('gulp-sass')
 const autoprefixer = require('gulp-autoprefixer')
 const sourcemaps   = require('gulp-sourcemaps')
 const browserSync  = require('browser-sync').create()
@@ -12,28 +12,20 @@ const yargs        = require('yargs')
 const ejs          = require("gulp-ejs")
 const argv         = yargs.alias('n', 'name').alias('p', 'port').argv
 
-function create () {
-    // 1、新建模板
-    // 2、修改index.html的内容
-    // 3、添加 xxxx.scss、xxxx.js 进src
-    // 4、添加基本内容进入xxxx.js
-    // 5、编译并且启动
-}
-
 function scss () {
     return gulp.src('./components/**/src/*.scss')
-        .pipe(sourcemaps.init())
-        .pipe(autoprefixer({
-            browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
-            cascade: true,
-            remove: true
-        }))
-        .pipe(sass().on('error', sass.logError))
-        .pipe(sourcemaps.write('./')) 
-        .pipe(rename(function (path) {
-            path.dirname = path.dirname.replace('src', 'dist')
-        }))
-        .pipe(gulp.dest('./components'))
+               .pipe(sourcemaps.init())
+               .pipe(autoprefixer({
+                   browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
+                   cascade: true,
+                   remove: true
+               }))
+               .pipe(sass().on('error', sass.logError))
+               .pipe(sourcemaps.write('./')) 
+               .pipe(rename(function (path) {
+                   path.dirname = path.dirname.replace('src', 'dist')
+               }))
+               .pipe(gulp.dest('./components'))
 }
 
 function babel_env () {
@@ -66,18 +58,17 @@ function compile () {
     let components = []
     const files = fs.readdirSync('./components')
     files.forEach(function (item, index) {
-        var stat = fs.lstatSync("./components/" + item)
+        let stat = fs.lstatSync("./components/" + item)
         if (stat.isDirectory() === true) { 
           components.push(item)
         }
     })
-    return gulp.src('./index.html')
+    return gulp.src('./templates/index.html')
                .pipe(ejs({
                    components: components
                }))
                .pipe(gulp.dest('./components'))
 }
-
 
 // 编译sass
 gulp.task(scss)
@@ -85,24 +76,23 @@ gulp.task(scss)
 // 编译babel
 gulp.task(babel_env)
 
-// 创建一个组件
-gulp.task(create)
-
-// 编译ejs
-gulp.task(compile)
 
 // 静态服务器
 gulp.task('serve', function() {
+
+    compile();
+
     browserSync.init({
         port: argv.port || '3000',
         server: {
             baseDir: './components/' + (argv.name || '')
         },
     })
+
     gulp.watch('./components/**/src/*.scss', scss)
     gulp.watch('./components/**/src/*.js', babel_env)
     gulp.watch(['./components/**/*.html','./components/**/src/*.js','./components/**/src/*.scss']).on('change', reload)
 })
 
 // 开始
-gulp.task('default', gulp.series('scss', 'babel_env', 'compile', 'serve'))
+gulp.task('default', gulp.series('scss', 'babel_env', 'serve'))

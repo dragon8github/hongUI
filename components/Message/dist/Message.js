@@ -69,7 +69,7 @@
     // 插入css
     var linkStyle = function linkStyle(v) {
         var head = document.getElementsByTagName('head')[0];
-        linkTag = document.createElement('link');
+        var linkTag = document.createElement('link');
         linkTag.href = getPath + v;
         linkTag.setAttribute('rel', 'stylesheet');
         linkTag.setAttribute('type', 'text/css');
@@ -102,6 +102,20 @@
                     }
                 });
             })(Object.prototype.toString.call(links) === '[object Array]' ? links : arguments);
+
+            var waitloadcss = function (args) {
+                var link = Array.prototype.shift.call(args);
+                styleOnload(link, function () {
+                    if (args.length === 0) {
+                        if (typeof cb === 'function') {
+                            isLoadFinish = true;
+                            cb();
+                        }
+                    } else {
+                        waitloadcss.call(this, args);
+                    }
+                });
+            }(Object.prototype.toString.call(links) === '[object Array]' ? links : arguments);
         } else {
             if (typeof cb === 'function') {
                 cb();
