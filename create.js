@@ -38,6 +38,22 @@ function readSyncByfs(tips) {
     return buf.toString('utf8', 0, response).trim();
 }
 
+// 删除文件夹
+function deleteall(path) {  
+    var files = [];  
+    if(fs.existsSync(path)) {  
+        files = fs.readdirSync(path);  
+        files.forEach(function(file, index) {  
+            var curPath = path + "/" + file;  
+            if(fs.statSync(curPath).isDirectory()) { // recurse  
+                deleteall(curPath);  
+            } else { // delete file  
+                fs.unlinkSync(curPath);  
+            }  
+        });  
+        fs.rmdirSync(path);  
+    }  
+};  
 
 function create () {
     // 解压路径
@@ -52,6 +68,11 @@ function create () {
     fs.exists(PROJECT_PATH, function (exists) {
         if(exists){
             console.error('项目已存在, 请更换名称')
+            var a = readSyncByfs("是否要强制替换？(y/n)");
+            if (a.toLocaleLowerCase() === 'y') {
+                deleteall(PROJECT_PATH);
+                create();
+            }
         } else {
             // 创建模版目录
             extract(TEMPLATE_PROJECT, {dir: PROJECT_PATH}, function (err) {
@@ -75,10 +96,6 @@ function create () {
     })
 }
 
+create()
 
 
-
-// create()
-
-var a = readSyncByfs('');
-console.log(a)
