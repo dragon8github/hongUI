@@ -44,6 +44,7 @@ function babel_env () {
                         "babel-preset-stage-2"
                     ],
                     plugins: [
+                        // 需要模块化才开启
                         // 'transform-runtime'
                     ]
                }))
@@ -91,7 +92,7 @@ gulp.task('serve', function() {
 
     gulp.watch('./components/**/src/*.scss', scss)
     gulp.watch('./components/**/src/*.js', babel_env)
-    gulp.watch(['./components/**/*.html','./components/**/src/*.js','./components/**/src/*.scss']).on('change', reload)
+    gulp.watch(['./components/**/*.html', './components/**/src/*.js', './components/**/src/*.scss']).on('change', reload)
 })
 
 // 开始

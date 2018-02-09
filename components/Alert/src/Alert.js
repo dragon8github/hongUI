@@ -5,7 +5,6 @@ var setStyle = function setStyle(cssname) {var head = document.getElementsByTagN
 
 ;(function (win, Vue) {
     'use strict';
-
     setStyle("Alert.css")
     setStyle("icon.css")
 
