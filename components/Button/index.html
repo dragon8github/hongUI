@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Button</title>
+      <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+      <hong-button>默认按钮</hong-button>
+      <hong-button type="primary">主要按钮</hong-button>
+      <hong-button type="success">成功按钮</hong-button>
+      <hong-button type="info">信息按钮</hong-button>
+      <hong-button type="warning">警告按钮</hong-button>
+      <hong-button type="danger">危险按钮</hong-button>
+    </div>
+
+    <div style="margin: 20px 0">
+      <hong-button plain>朴素按钮</hong-button>
+      <hong-button type="primary" plain>主要按钮</hong-button>
+      <hong-button type="success" plain>成功按钮</hong-button>
+      <hong-button type="info" plain>信息按钮</hong-button>
+      <hong-button type="warning" plain>警告按钮</hong-button>
+      <hong-button type="danger" plain>危险按钮</hong-button>
+    </div>
+
+    <div style="margin: 20px 0">
+      <hong-button round>圆形按钮</hong-button>
+      <hong-button type="primary" round>主要按钮</hong-button>
+      <hong-button type="success" round>成功按钮</hong-button>
+      <hong-button type="info" round>信息按钮</hong-button>
+      <hong-button type="warning" round>警告按钮</hong-button>
+      <hong-button type="danger" round>危险按钮</hong-button>
+    </div>
+    
+    <div style="margin: 20px 0">
+        <hong-button type="primary" icon="hong-icon-edit"></hong-button>
+        <hong-button type="primary" icon="hong-icon-share"></hong-button>
+        <hong-button type="primary" icon="hong-icon-delete"></hong-button>
+        <hong-button type="primary" icon="hong-icon-search">搜索</hong-button>
+        <hong-button type="primary">上传<i class="hong-icon-upload hong-icon--right"></i></hong-button>
+    </div>
+
+</div>
+</body>
+<script src="./dist/Button.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods: {
+
+        },
+        components: {
+
+        },
+        beforeMount: function () {
+			console.log("Button");
+		}
+    })
+</script>
+</html>
