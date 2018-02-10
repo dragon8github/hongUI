@@ -1,4 +1,4 @@
-<template>
+d<template>
   <transition name="el-alert-fade">
      <div
        class="el-alert"
@@ -79,31 +79,26 @@ const TYPE_CLASSES_MAP = {
  };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+@import '~@scss/icon.scss';
+@import '~@scss/mixin.scss';
+
 .el-alert {
     width: 100%;
     padding: 8px 16px;
     margin: 0;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 4px;
     position: relative;
     background-color: #fff;
     overflow: hidden;
     opacity: 1;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-transition: opacity .2s;
     transition: opacity .2s
 }
 
 .el-alert.is-center {
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center
 }
 
